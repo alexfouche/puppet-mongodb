@@ -31,9 +31,11 @@ class mongodb::params inherits mongodb::globals {
 
   if $version {
     $package_ensure        = $version
+    $package_ensure_tools  = $version
     $package_ensure_mongos = $version
   } else {
     $package_ensure        = true
+    $package_ensure_tools  = true
     $package_ensure_mongos = true
   }
 
@@ -44,12 +46,14 @@ class mongodb::params inherits mongodb::globals {
         $user                    = pick($mongodb::globals::user, 'mongod')
         $group                   = pick($mongodb::globals::group, 'mongod')
         $server_package_name     = pick($mongodb::globals::server_package_name, "mongodb-${mongodb::globals::edition}-server")
+        $tools_package_name      = pick($mongodb::globals::tools_package_name, "mongodb-${mongodb::globals::edition}-tools")
       } else {
         # RedHat/CentOS doesn't come with a prepacked mongodb
         # so we assume that you are using EPEL repository.
         $user                    = pick($mongodb::globals::user, 'mongodb')
         $group                   = pick($mongodb::globals::group, 'mongodb')
         $server_package_name     = pick($mongodb::globals::server_package_name, 'mongodb-server')
+        $tools_package_name      = pick($mongodb::globals::tools_package_name, 'mongodb-tools')
       }
 
       $service_name = pick($mongodb::globals::service_name, 'mongod')
@@ -63,10 +67,12 @@ class mongodb::params inherits mongodb::globals {
       if $manage_package {
         $service_name            = pick($mongodb::globals::service_name, 'mongod')
         $server_package_name     = pick($mongodb::globals::server_package_name, "mongodb-${mongodb::globals::edition}-server")
+        $tools_package_name      = pick($mongodb::globals::tools_package_name, "mongodb-${mongodb::globals::edition}-tools")
         $config                  = '/etc/mongod.conf'
         $pidfilepath             = pick($mongodb::globals::pidfilepath, '/var/run/mongod.pid')
       } else {
         $server_package_name = pick($mongodb::globals::server_package_name, 'mongodb-server')
+        $tools_package_name  = pick($mongodb::globals::tools_package_name, 'mongodb-tools')
         $service_name        = pick($mongodb::globals::service_name, 'mongodb')
         $config              = '/etc/mongodb.conf'
         $pidfilepath         = $mongodb::globals::pidfilepath

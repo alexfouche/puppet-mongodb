@@ -39,6 +39,7 @@ The MongoDB module also manages Ops Manager setup and the mongdb-mms daemon.
 * MongoDB configuration files.
 * MongoDB service.
 * MongoDB client.
+* MongoDB tools.
 * MongoDB sharding support (mongos)
 * MongoDB apt/yum repository.
 * Ops Manager package.
@@ -61,6 +62,12 @@ For Red Hat family systems, the client can be installed in a similar fashion:
 
 ```puppet
 class {'mongodb::client':}
+```
+
+and tools:
+
+```puppet
+class {'::mongodb::tools':}
 ```
 
 Note that for Debian/Ubuntu family systems the client is installed with the
@@ -170,6 +177,7 @@ There are also some settings that can be configured in `mongodb::globals`.
 #### Public classes
 * `mongodb::server`: Installs and configure MongoDB
 * `mongodb::client`: Installs the MongoDB client shell (for Red Hat family systems)
+* `mongodb::tools`: Installs the MongoDB tools (for Red Hat family systems)
 * `mongodb::globals`: Configure main settings in a global way
 * `mongodb::mongos`: Installs and configure Mongos server (for sharding support)
 * `mongodb::opsmanager`: Installs and configure Ops Manager
